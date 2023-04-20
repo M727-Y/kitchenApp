@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Ingridients</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+</head>
+<body>
+<div th:insert="blocks/header :: header"></div>
+<div class="container">
+  <div class="row">
+
+    <p>Shopping List</p>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <p>Ingridients in your Shopping List</p>
+      <ul th:each="ing: ${user.shoppingList}">
+        <li class="d-flex flex-row">
+          <p th:text="${ing.name}"></p>
+          <form method="post" th:action="@{/deleteIngridientFromShoppingList}">
+            <input th:value="${ing.id}" name="ingId" hidden>
+
+            <button class="btn btn-danger">Delete</button>
+
+          </form>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-8">
+      <form class="d-flex flex-row" th:object="${ingridient}" th:action="@{/add_ingridient}" method="post">
+        <input th:field="*{name}"/>
+        <button class="btn btn-success">Add Ingridient</button>
+      </form>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ingridient: ${ingridients}">
+          <td th:text="${ingridient.id}"></td>
+          <td th:text="${ingridient.name}"></td>
+          <td>
+            <form method="post" th:action="@{/addIngridientToShoppingList}">
+              <input th:value="${ingridient.id}" name="ingId" hidden>
+
+              <button class="btn btn-success">Add</button>
+
+            </form>
+          </td>
+
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+
+  </div>
+  <div class="row">
+    <a href="/recipes" class="btn btn-primary">Finish</a>
+  </div>
+
+</div>
+</body>
+</html>

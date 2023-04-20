@@ -1,0 +1,34 @@
+<div th:fragment="userRecipes">
+<div class="container">
+  <div>
+    <h1>Your Recipes</h1>
+  </div>
+
+  <div>
+    <table class="table table-striped table-bordered">
+      <thead class="thead-dark">
+      <tr>
+        <th>Recipe Name</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="recipe: ${recipes}">
+        <td th:text="${recipe.name}"></td>
+        <td class="d-flex flex-row">
+          <a th:href="@{/recipes/edit/{id}(id=${recipe.id})}" type="button" class="btn btn-sm btn-outline-secondary">view</a>
+          <form method="post" th:action="@{/updateRecipe}">
+            <input name="id" th:value="${recipe.id}" hidden>
+            <button type="submit" class="btn btn-primary" value="Update Recipe">Edit</button>
+          </form>
+          <form method="post" th:action="@{/removeRecipe}">
+            <input name="id" th:value="${recipe.id}" hidden>
+            <button type="submit" class="btn btn-danger" value="Remove Recipe">Remove</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
